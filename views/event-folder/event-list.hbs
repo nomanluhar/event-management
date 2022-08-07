@@ -1,0 +1,44 @@
+<h3><a class="btn btn-secondary" href="/event"><i class="fa fa-plus"></i>Create New</a>Events List</h3>
+<form action="/event" method="POST" autocomplete="off">
+<div class="row">
+    <input type="hidden" name='search' value="searchField">
+    <div class="col-sm-5">
+        <input type="text" class="form-control" name="eventname" placeholder="Event name">
+    </div>
+    <div class="col-sm-3">
+        <button type="submit" class="btn btn-secondary">Search</button>
+    </div>
+</div>
+</form>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Event name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th></th>
+            <th>Invite</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+        <tr>
+            <td>{{this.eventname}}</td>
+            <td>{{this.date}}</td>
+            <td>{{this.time}}</td>
+            <td>
+                <a href="/event/{{this._id}}"><i class="fa fa-pencil fa-lg me-2" aria-hidden="true"></i></a>
+                <a href="/event/delete/{{this._id}}" onclick="return confirm('Are you sure you want to delete?')"><i
+                        class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+            </td>
+            <td>
+                <a href="/event/invite/{{this._id}}"><i class="fa fa-calendar fa-lg" aria-hidden="true"></i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+</script>

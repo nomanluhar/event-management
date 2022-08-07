@@ -1,0 +1,25 @@
+<h3>{{viewTitle}}</h3>
+
+
+<form action="/event" method="POST" autocomplete="off">
+    <input type="hidden" name='_id' value="{{events._id}}">
+    <div class="mb-3">
+        <label for="eventInput" class="form-label">Event</label>
+        <input type="text" class="form-control" id="eventInput" name="eventname" placeholder="Event Name"
+            value="{{events.eventname}}">
+        <div class="text-danger">{{events.eventError}}</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="dateInput" class="form-label">Date</label>
+        <input type="date" class="form-control" id="dateInput" name="date" placeholder="Date" value="{{events.date}}">
+        <div class="text-danger">{{events.dateError}}</div>
+    </div>
+    <div class="mb-3">
+        <label for="timeInput" class="form-label">Time</label>
+        <input type="time" class="form-control" id="timeInput" name="time" placeholder="Time" value="{{events.time}}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-secondary" href="/event/list"><i class="fa fa-list-alt"></i>Events List</a>
+</form>

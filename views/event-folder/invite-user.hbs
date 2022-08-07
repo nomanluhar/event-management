@@ -1,0 +1,42 @@
+<h3>{{viewTitle}}</h3>
+
+<form action="/event" method="POST" autocomplete="off">
+    <input type="hidden" name='_id' value="{{events._id}}">
+    <div id="mainDiv">
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <label for="emailInput" class="form-label">Email Address</label>
+                <input type="text" class="form-control" id="emailInput" name="emailAddress">
+            </div>
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-danger" id="addEmail"><i class="fa fa-plus fa-lg"
+                        aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+    <a class="btn btn-secondary" href="/event/list"><i class="fa fa-list-alt"></i>Events List</a>
+</form>
+
+<script type="text/javascript">
+    (function () {
+        document.getElementById('addEmail').addEventListener('click', () => {
+            var html = '<div class="row mb-3"><div class="col-sm-9"><input type="text" class="form-control" id="emailInput" name="emailAddress"> </div></div>';
+            var rowDiv = document.createElement("div");
+            rowDiv.classList.add('row');
+            rowDiv.classList.add('mb-3');
+
+            var colDiv = document.createElement("div");
+            colDiv.classList.add('col-sm-9');
+
+            var x = document.createElement("INPUT");
+            x.setAttribute("type", "text");
+            x.setAttribute("name", "emailAddress");
+            x.classList.add("form-control");
+
+            colDiv.appendChild(x)
+            rowDiv.appendChild(colDiv)
+            document.getElementById('mainDiv').appendChild(rowDiv);
+        });
+    })();
+</script>
