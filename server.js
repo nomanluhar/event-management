@@ -32,4 +32,5 @@ require('./event-migrations/migrate-mongo-config.js');
 
 app.listen(PORT, function () {
     console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Start with this http://localhost:${PORT}/event`);
 });
