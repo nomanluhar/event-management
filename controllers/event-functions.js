@@ -95,7 +95,6 @@ function updateData(req, res) {
 };
 
 async function sendInvite(req, res) {
-    let testAccount = await nodemailer.createTestAccount();
     Events.findById(req.body._id, (err, response) => {
         if (err) {
             console.log(`Error in getting event date : ` + err);
@@ -108,15 +107,28 @@ async function sendInvite(req, res) {
                     pass: "faspdujfphvkworw"
                 }
             });
-            // var calander = getIcalObjectInstance(response);
-            // console.log(calander)'Event Invitation'
-            console.log(req.body.emailAddress)
+            var calander = getIcalObjectInstance(response);
             var mailOpt = {
                 to: req.body.emailAddress,
                 subject: 'Event Invitation',
                 text: 'Hello you have been invite in event',
                 html: `<!DOCTYPE html><head> </head> <body><h1> Hello User, You have been invited in event name: ${response.eventname} On Date : ${response.date} time : ${response.time}</h1></body></html>`
             };
+
+            if (calander) {
+                let alternatives = {
+                    "Content-Type": "text/calendar",
+                    "method": "REQUEST",
+                    "content": new Buffer(calander.toString()),
+                    "component": "VEVENT",
+                    "Content-Class": "urn:content-classes:calendarmessage"
+                }
+                mailOpt['alternatives'] = alternatives;
+                mailOpt['alternatives']['contentType'] = 'text/calendar'
+                mailOpt['alternatives']['content']
+                    = new Buffer(calander.toString())
+            };
+
             smtpTransport.sendMail(mailOpt, function (error, response) {
                 if (error) {
                     console.log(error);
@@ -130,16 +142,15 @@ async function sendInvite(req, res) {
 };
 
 function getIcalObjectInstance(obj) {
-    const cal = ical();
-    cal.setDomain(`http://localhost:8080/event`).setName('My ical invite');
+    const cal = ical({ name: 'my first iCal' });
     cal.createEvent({
-        start: moment(),         // eg : moment()
-        end: moment(1, 'days'),             // eg : moment(1,'days')
+        start: moment(obj.date + ' ' + obj.time),        
+        // end: moment(1, 'days'),             
         summary: '',
-        url: 'tets0',         // 'Summary of your event'
-        description: '', // 'More description'
-        location: 'Ahmedabad',       // 'Delhi'     
-        organizer: {              // 'organizer details'
+        url: '',        
+        description: '',
+        location: 'Ahmedabad',           
+        organizer: {            
             name: obj.eventname,
             email: 'luharnoman409@gmail.com'
         },
